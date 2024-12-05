@@ -1,6 +1,6 @@
 ﻿# ComfyUI Layer Style Advance
 
-从ComfyUI Layer Style 剥离出来的节点，主要是一些对依赖包要求较为复杂的节点。
+从[ComfyUI Layer Style](https://github.com/chflame163/ComfyUI_LayerStyle) 剥离出来的节点，主要是一些对依赖包要求较为复杂的节点。
 
 
 ## 工作流用示例
