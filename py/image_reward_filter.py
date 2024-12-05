@@ -73,5 +73,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: ImageRewardFilter": "LayerUtility: ImageRewardFilter(Obsolete)"
+    "LayerUtility: ImageRewardFilter": "LayerUtility: ImageRewardFilter(Advanced)"
 }
