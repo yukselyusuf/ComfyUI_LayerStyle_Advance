@@ -34,7 +34,3 @@ blind-watermark
 qrcode
 pyzbar
 psd-tools
-
-#torchscale
-# inference-cli>=0.13.0
-# inference-gpu[yolo-world]>=0.13.0

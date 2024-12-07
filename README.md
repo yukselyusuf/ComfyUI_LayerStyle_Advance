@@ -593,6 +593,35 @@ Node Options:
 * zero_out_start: Set the ConditioningSetTimestepRange start value for Negative ConditioningZeroOut, which is the same as the ConditioningSetTimestepRange end value for Negative.
 
 
+### <a id="table1">BenUltra</a>
+It is the implementation of [PramaLLC/BEN](https://huggingface.co/PramaLLC/BEN)  project in ComfyUI. Thank you to the original author.
+   
+Download the ```BEN_Base.pth``` and ```config.json``` from [huggingface](https://huggingface.co/PramaLLC/BEN/tree/main) or [BaiduNetdisk](https://pan.baidu.com/s/17mdBxfBl_R97mtNHuiHsxQ?pwd=2jn3) and copy to ```ComfyUI/models/BEN``` folder.
+
+![image](image/ben_ultra_example.jpg)
+
+Node Options：
+![image](image/ben_ultra_node.jpg)
+* ben_model: Ben model input.
+* image: Image input.
+* detail_method: Edge processing methods. provides VITMatte, VITMatte(local), PyMatting, GuidedFilter. If the model has been downloaded after the first use of VITMatte, you can use VITMatte (local) afterwards.
+* detail_erode: Mask the erosion range inward from the edge. the larger the value, the larger the range of inward repair.
+* detail_dilate: The edge of the mask expands outward. the larger the value, the wider the range of outward repair.
+* black_point: Edge black sampling threshold.
+* white_point: Edge white sampling threshold.
+* process_detail: Set to false here will skip edge processing to save runtime.
+* max_megapixels: Set the maximum size for VitMate operations.
+
+### <a id="table1">LoadBenModel</a>
+Load the BEN model. 
+
+
+Node Options:  
+![image](image/load_ben_model_node.jpg)  
+
+* model: Select the model. Currently, only the Ben_Sase model is available for selection.
+
+
 
 ### <a id="table1">SegmentAnythingUltra</a>
 

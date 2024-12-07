@@ -534,6 +534,34 @@ all_layers: 包含全部图层的批量图片。
 * zero_out_start: 设置Negative ConditioningZeroOut的ConditioningSetTimestepRange start值, 此数值与Negative的ConditioningSetTimestepRange end值相同。
 
 
+### <a id="table1">BenUltra</a>
+是[PramaLLC/BEN](https://huggingface.co/PramaLLC/BEN) 项目在ComfyUI中的实现。感谢原作者。    
+从 [huggingface](https://huggingface.co/PramaLLC/BEN/tree/main) 或 [百度网盘](https://pan.baidu.com/s/17mdBxfBl_R97mtNHuiHsxQ?pwd=2jn3)下载```BEN_Base.pth``` 和 ```config.json``` 两个文件并复制到 ```ComfyUI/models/BEN```文件夹。
+
+![image](image/ben_ultra_example.jpg)
+
+节点选项说明：
+![image](image/ben_ultra_node.jpg)
+* ben_model: Ben模型输入。
+* image: 图片输入。
+* detail_method: 边缘处理方法。提供了VITMatte, VITMatte(local), PyMatting, GuidedFilter。如果首次使用VITMatte后模型已经下载，之后可以使用VITMatte(local)。
+* detail_erode: 遮罩边缘向内侵蚀范围。数值越大，向内修复的范围越大。
+* detail_dilate: 遮罩边缘向外扩张范围。数值越大，向外修复的范围越大。
+* black_point: 边缘黑色采样阈值。
+* white_point: 边缘白色采样阈值。
+* process_detail: 此处设为False将跳过边缘处理以节省运行时间。
+* max_megapixels: 设置vitmatte运算的最大尺寸。
+
+### <a id="table1">LoadBenModel</a>
+加载BEN模型。 
+
+
+节点选项说明:  
+![image](image/load_ben_model_node.jpg)  
+
+* model: 选择模型。目前仅有Ben_Base 模型可选。
+
+
 
 ### <a id="table1">SegmentAnythingUltra</a>
 对[ComfyUI Segment Anything](https://github.com/storyicon/comfyui_segment_anything)的改进，使遮罩有更具细节的边缘，感谢原作者。
