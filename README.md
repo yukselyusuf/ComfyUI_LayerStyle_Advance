@@ -25,14 +25,14 @@ Some JSON workflow files in the    ```workflow``` directory, That's examples of 
   git clone https://github.com/chflame163/ComfyUI_LayerStyle_Advance.git
   ```
 
-* Or download the zip file and extracted, copy the resulting folder to ```ComfyUI\custom_ Nodes```    
+* Or download the zip file and extracted, copy the resulting folder to ```ComfyUI\custom_nodes```    
 
 ### Install dependency packages
 
 * for ComfyUI official portable package, double-click the ```install_requirements.bat``` in the plugin directory, for Aki ComfyUI package double-click on the ```install_requirements_aki.bat``` in the plugin directory, and wait for the installation to complete.
 
 * Or install dependency packages, open the cmd window in the ComfyUI_LayerStyle plugin directory like 
-  ```ComfyUI\custom_ Nodes\ComfyUI_LayerStyle_Advance``` and enter the following command,
+  ```ComfyUI\custom_nodes\ComfyUI_LayerStyle_Advance``` and enter the following command,
 
 &emsp;&emsp;for ComfyUI official portable package, type:
 
@@ -144,6 +144,7 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Florence2 add support [gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) and [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux) models, download Florence-2-Flux-Large and Florence-2-Flux folder from [BaiduNetdisk](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) and copy to ```ComfyUI\models\florence2`` folder.
 * Discard the dependencies required for the [ObjectDetector YOLOWorld](#ObjectDetectorYOLOWorld) node from the requirements. txt file. To use this node, please manually install the dependency package.
 * Strip some nodes from [ComfyUI Layer Style](https://github.com/chflame163/ComfyUI_LayerStyle) to this repository.
 

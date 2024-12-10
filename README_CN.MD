@@ -120,6 +120,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* Florence2 节点支持[gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) 和 [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux)模型。从[百度网盘](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) 或者 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) 下载Florence-2-Flux-Large 和 Florence-2-Flux 两个目录，并放到```ComfyUI\models\florence2``文件夹。  
 * 从requirements.txt 中废弃 [ObjectDetector YOLOWorld](#ObjectDetectorYOLOWorld) 节点所需的依赖。如需使用此节点，请手动安装依赖包。
 * 从ComfyUI Layer Style 剥离部分节点至本仓库。
 

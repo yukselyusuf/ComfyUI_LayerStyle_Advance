@@ -27,7 +27,9 @@ fl2_model_repos = {
     "base-PromptGen-v1.5":"MiaoshouAI/Florence-2-base-PromptGen-v1.5",
     "large-PromptGen-v1.5":"MiaoshouAI/Florence-2-large-PromptGen-v1.5",
     "base-PromptGen-v2.0":"MiaoshouAI/Florence-2-base-PromptGen-v2.0",
-    "large-PromptGen-v2.0":"MiaoshouAI/Florence-2-large-PromptGen-v2.0"
+    "large-PromptGen-v2.0":"MiaoshouAI/Florence-2-large-PromptGen-v2.0",
+    "Florence-2-Flux":"gokaygokay/Florence-2-Flux",
+    "Florence-2-Flux-Large":"gokaygokay/Florence-2-Flux-Large"
 }
 
 def fixed_get_imports(filename) -> list[str]:
