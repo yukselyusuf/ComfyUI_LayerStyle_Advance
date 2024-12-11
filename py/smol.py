@@ -60,10 +60,9 @@ class LS_Load_SmolLM2_Model:
     CATEGORY = '😺dzNodes/LayerUtility'
 
     def load_smollm2_model(self, model, dtype, device):
-
-        model_path = os.path.join(folder_paths.models_dir, "smol", model)
         repo_id = smollm2_repo[model]
-        check_and_download_model(model_path, repo_id)
+        model_path = os.path.join("smol", model)
+        model_path = check_and_download_model(model_path, repo_id)
 
         torch_dtype = torch.bfloat16 if dtype == "bf16" else torch.float32
 
@@ -98,9 +97,9 @@ class LS_Load_SmolVLM_Model:
 
     def load_smolvlm_model(self, model, dtype, device):
 
-        model_path = os.path.join(folder_paths.models_dir, "smol", model)
         repo_id = smolvlm_repo[model]
-        check_and_download_model(model_path, repo_id)
+        model_path = os.path.join("smol", model)
+        model_path = check_and_download_model(model_path, repo_id)
 
         torch_dtype = torch.bfloat16 if dtype == "bf16" else torch.float32
 
