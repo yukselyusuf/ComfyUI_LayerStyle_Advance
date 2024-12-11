@@ -120,7 +120,10 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
-* Florence2 节点支持[gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) 和 [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux)模型。从[百度网盘](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) 或者 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) 下载Florence-2-Flux-Large 和 Florence-2-Flux 两个目录，并放到```ComfyUI\models\florence2``文件夹。  
+* 添加 [SmolLM2](#SmolLM2), [SmolVLM](#SmolVLM), [LoadSmolLM2Model](#LoadSmolLM2Model) 和 [LoadSmolVLMModel](#LoadSmolVLMModel) 节点，使用smol轻量级本地模型进行文本推理和图片识别。
+从[百度网盘](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) 或 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) 下载模型文件至```ComfyUI/models/smol```文件夹。
+* Florence2 节点支持[gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) 和 [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux)模型。
+从[百度网盘](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) 或者 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) 下载Florence-2-Flux-Large 和 Florence-2-Flux 两个目录，并放到```ComfyUI\models\florence2``文件夹。  
 * 从requirements.txt 中废弃 [ObjectDetector YOLOWorld](#ObjectDetectorYOLOWorld) 节点所需的依赖。如需使用此节点，请手动安装依赖包。
 * 从ComfyUI Layer Style 剥离部分节点至本仓库。
 
@@ -129,7 +132,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 
 ### <a id="table1">QWenImage2Prompt</a>
 根据图片反推提示词。这个节点是[ComfyUI_VLM_nodes](https://github.com/gokayfem/ComfyUI_VLM_nodes)中的```UForm-Gen2 Qwen Node```节点的重新封装，感谢原作者。
-请从[huggingface](https://huggingface.co/unum-cloud/uform-gen2-qwen-500m)或者[百度网盘](https://pan.baidu.com/s/1oRkUoOKWaxGod_XTJ8NiTA?pwd=d5d2)下载模型到```ComfyUI/models/LLavacheckpoints/files_for_uform_gen2_qwen```文件夹。
+从[huggingface](https://huggingface.co/unum-cloud/uform-gen2-qwen-500m)或者[百度网盘](https://pan.baidu.com/s/1oRkUoOKWaxGod_XTJ8NiTA?pwd=d5d2)下载模型到```ComfyUI/models/LLavacheckpoints/files_for_uform_gen2_qwen```文件夹。
 
 ![image](image/qwen_image2prompt_example.jpg)    
 
@@ -258,6 +261,57 @@ JoyCaption2的extra_options参数节点。
 * do_sample: LLM的do_sample参数，默认为True。
 * temperature: LLM的temperature参数，默认为0.5。
 * max_new_tokens: LLM的max_new_tokens参数，默认为512。
+
+### <a id="table1">SmolLM2</a>
+使用 [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct) 轻量级文本模型进行本地推理。
+从[百度网盘](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) 或 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) 找到 SmolLM2-135M-Instruct、SmolLM2-360M-Instruct、SmolLM2-1.7B-Instruct三个文件夹，至少下载其中之一，复制到 ```ComfyUI/models/smol```文件夹。
+
+![image](image/smollm2_example.jpg)    
+
+节点选项说明:   
+![image](image/smollm2_node.jpg)    
+
+* smolLM2_model: SmolLM2模型输入，从[LoadSmolLM2Model](#LoadSmolLM2Model) 节点加载。
+* max_new_tokens: 最大tokens，默认为512。
+* do_sample: do_sample参数，默认为True。
+* temperature: temperature参数，默认为0.5。
+* top-p: top_p参数，默认0.9。
+* system_prompt: 系统提示词。
+* user_prompt: 用户提示词。
+
+### <a id="table1">LoadSmolLM2Model</a>
+加载 SmolLM2 模型。
+
+节点选项说明:   
+![image](image/load_smollm2_node.jpg)    
+
+* model: SmolLM2模型选择，有SmolLM2-135M-Instruct、SmolLM2-360M-Instruct、SmolLM2-1.7B-Instruct三个选项。
+* dtype: 模型精度，有bf16和fp32两个选项。
+* device: 模型加载设备，有cuda和cpu两个选项。
+
+### <a id="table1">SmolVLM</a>
+使用 [SmolVLM](https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct) 轻量级视觉模型进行本地推理。
+从[百度网盘](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) 或 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) 下载SmolVLM-Instruct文件夹，复制到 ```ComfyUI/models/smol```文件夹。
+
+![image](image/smolvlm_example.jpg)    
+
+节点选项说明:   
+![image](image/smolvlm_node.jpg)    
+
+* image: 图片输入，支持批量图片。
+* smolVLM_model: SmolVLM模型输入，从[LoadSmolVLMModel](#LoadSmolVLMModel) 节点加载。
+* max_new_tokens: 最大tokens，默认为512。
+* user_prompt: 用户提示词。
+
+### <a id="table1">LoadSmolVLMModel</a>
+加载 SmolVLM 模型。
+
+节点选项说明:   
+![image](image/load_smolvlm_model_node.jpg)    
+
+* model: SmolVLM模型选择，目前仅有SmolVLM-Instruct这一个选择。
+* dtype: 模型精度，有bf16和fp32两个选项。
+* device: 模型加载设备，有cuda和cpu两个选项。
 
 
 ### <a id="table1">UserPromptGeneratorTxtImg</a>

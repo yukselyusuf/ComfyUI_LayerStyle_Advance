@@ -144,7 +144,10 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
-* Florence2 add support [gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) and [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux) models, download Florence-2-Flux-Large and Florence-2-Flux folder from [BaiduNetdisk](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) and copy to ```ComfyUI\models\florence2`` folder.
+* Commit [SmolLM2](#SmolLM2), [SmolVLM](#SmolVLM), [LoadSmolLM2Model](#LoadSmolLM2Model) and [LoadSmolVLMModel](#LoadSmolVLMModel) nodes, use SMOL model for text inference and image recognition.
+download the model file from [BaiduNetdisk](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) and copy to ```ComfyUI/models/smol``` folder.
+* Florence2 add support [gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) and [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux) models, 
+download Florence-2-Flux-Large and Florence-2-Flux folder from [BaiduNetdisk](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) and copy to ```ComfyUI\models\florence2`` folder.
 * Discard the dependencies required for the [ObjectDetector YOLOWorld](#ObjectDetectorYOLOWorld) node from the requirements. txt file. To use this node, please manually install the dependency package.
 * Strip some nodes from [ComfyUI Layer Style](https://github.com/chflame163/ComfyUI_LayerStyle) to this repository.
 
@@ -285,6 +288,61 @@ Node Options:
 * do_sample: The do_Sample parameter of LLM defaults to True.
 * temperature: The temperature parameter of LLM defaults to 0.5.
 * max_new_tokens: The max_new_token parameter of LLM defaults to 512.
+
+### <a id="table1">SmolLM2</a>
+Use the  [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct) model for local inference.
+
+Download model files from [BaiduNetdisk](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol),
+find the SmolLM2-135M-Instruct, SmolLM2-360M-Instruct, SmolLM2-1.7B-Instruct folders, download at least one of them, copy to ```ComfyUI/models/smol``` folder.
+
+![image](image/smollm2_example.jpg)    
+
+Node Options:   
+![image](image/smollm2_node.jpg)    
+
+* smolLM2_model: The input of SmolLM2 model is loaded from the [LoadSmolLM2Model](#LoadSmolLM2Model) node.
+* max_new_tokens: The maximum number of tokens is 512 by default.
+* do_sample: The do_Sample parameter defaults to True.
+* temperature: The temperature parameter defaults to 0.5.
+* top-p: The top_p parameter defaults to 0.9.
+* system_prompt: System prompt words.
+* user_prompt: User prompt words.
+
+### <a id="table1">LoadSmolLM2Model</a>
+Load SmolLM2 model.
+
+Node Options:   
+![image](image/load_smollm2_node.jpg)    
+
+* model: There are three options for selecting the SmolLM2 model: SmolLM2-135M-Instruct, SmolLM2-360M-Instruct and SmolLM2-1.7B-Instruct.
+* dtype: The model accuracy has two options: bf16 and fp32.
+* device: The model loading device has two options: cuda or cpu.
+
+### <a id="table1">SmolVLM</a>
+Using [SmolVLM](https://huggingface.co/HuggingFaceTB/SmolVLM-Instruct) lightweight visual models for local inference.
+
+Donwload the ```SmolVLM-Instruct``` folder from [BaiduNetdisk](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) and copy to ```ComfyUI/models/smol``` folder.
+
+![image](image/smolvlm_example.jpg)    
+
+Node Options:   
+![image](image/smolvlm_node.jpg)    
+
+* image: Image input, supports batch images.
+* smolVLM_model: The input of the SmolVLM model is loaded from the [LoadSmolVLMModel](#LoadSmolVLMModel) node.
+* max_new_tokens: The maximum number of tokens is 512 by default.
+* user_prompt: User prompt words.
+
+### <a id="table1">LoadSmolVLMModel</a>
+Load SmolVLM model.
+
+Node Options:   
+![image](image/load_smolvlm_model_node.jpg)    
+
+* model: The SmolVLM model selection currently only has the option of SmolVLM-Instruct.
+* dtype: The model accuracy has two options: bf16 and fp32.
+* device: The model loading device has two options: cuda or cpu.
+
 
 ### <a id="table1">UserPromptGeneratorTxtImg</a>
 

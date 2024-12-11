@@ -91,6 +91,14 @@ def load_light_leak_images() -> list:
     file = os.path.join(folder_paths.models_dir, "layerstyle", "light_leak.pkl")
     return load_pickle(file)
 
+def check_and_download_model(model_path, repo_id):
+    model_path = os.path.join(folder_paths.models_dir, model_path)
+
+    if not os.path.exists(model_path):
+        print(f"Downloading {repo_id} model...")
+        from huggingface_hub import snapshot_download
+        snapshot_download(repo_id=repo_id, local_dir=model_path, ignore_patterns=["*.md", "*.txt", "onnx", ".git"])
+
 '''Converter'''
 
 def cv22ski(cv2_image:np.ndarray) -> np.array:
