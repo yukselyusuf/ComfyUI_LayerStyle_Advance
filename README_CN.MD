@@ -121,6 +121,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* 添加 [DrawBBOXMaskV2](#DrawBBOXMaskV2) 节点，可绘制圆角矩形遮罩。
 * 添加 [SmolLM2](#SmolLM2), [SmolVLM](#SmolVLM), [LoadSmolLM2Model](#LoadSmolLM2Model) 和 [LoadSmolVLMModel](#LoadSmolVLMModel) 节点，使用smol轻量级本地模型进行文本推理和图片识别。
 从[百度网盘](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) 或 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) 下载模型文件至```ComfyUI/models/smol```文件夹。
 * Florence2 节点支持[gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) 和 [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux)模型。
@@ -793,6 +794,15 @@ pip install inference-gpu[yolo-world]>=0.13.0
 * grow_bottom: 每个识别框向下扩展范围，为识别框高度的百分比，正值为向下扩展，负值为向上扩展。
 * grow_left: 每个识别框向左扩展范围，为识别框宽度的百分比。正值为向左扩展，负值为向右扩展。
 * grow_right: 每个识别框向右扩展范围，为识别框宽度的百分比。正值为向右扩展，负值为向左扩展。
+
+### <a id="table1">DrawBBoxMaskV2</a>
+在[DrawBBoxMask](#DrawBBoxMask) 节点基础上增加圆角矩形绘制。   
+![image](image/draw_bbox_mask_v2_example.jpg)
+
+新增选项:  
+![image](image/draw_bbox_mask_v2_node.jpg)
+* rounded_rect_radius: 圆角矩形半径，范围0-100，数值越大圆角半径越大。
+* anti_alias: 抗锯齿，范围从0-16，数值越大，锯齿越不明显。过高的数值将显著降低节点的处理速度。
 
 
 ### <a id="table1">EVF-SAMUltra</a>

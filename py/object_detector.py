@@ -1,5 +1,5 @@
 # layerstyle advance
-
+import folder_paths
 from .imagefunc import *
 
 select_list = ["all", "first", "by_index"]
@@ -179,8 +179,8 @@ class LS_OBJECT_DETECTOR_FL2:
             y1_c = height
             x2_c = y2_c = 0
             for polygon in F_BBOXES["polygons"][0]:
-                if len(_polygon) < 3:
-                    print('Invalid polygon:', _polygon)
+                if len(polygon) < 3:
+                    print('Invalid polygon:', polygon)
                     continue
                 x1_c = min(x1_c, int(min(polygon[0::2])))
                 x2_c = max(x2_c, int(max(polygon[0::2])))
@@ -347,8 +347,11 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
         ret_previews = []
         ret_bboxes = []
 
-        import supervision as sv
-
+        try:
+            import supervision as sv
+        except ImportError as e:
+            log(f"{self.NODE_NAME}: {e}", message_type='warning')
+            return None
         model=self.load_yolo_world_model(yolo_world_model, prompt)
 
         for i in image:
@@ -393,12 +396,15 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
         return [category.strip().lower() for category in categories.split(',')]
 
     def load_yolo_world_model(self,model_id: str, categories: str) -> List[torch.nn.Module]:
-        from inference.models import YOLOWorld as YOLOWorldImpl
+        try:
+            from inference.models import YOLOWorld as YOLOWorldImpl
+        except ImportError as e:
+            log(f"{self.NODE_NAME}: {e}", message_type='warning')
+            return None
         model = YOLOWorldImpl(model_id=model_id)
         categories = self.process_categories(categories)
         model.set_classes(categories)
         return model
-
 
 
 class LS_DrawBBoxMask:
@@ -467,8 +473,85 @@ class LS_DrawBBoxMask:
         return (torch.cat(ret_masks, dim=0),)
 
 
+class LS_DrawBBoxMaskV2:
+
+    def __init__(self):
+        self.NODE_NAME = 'Draw BBOX Mask V2'
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "bboxes": ("BBOXES",),
+                "grow_top": ("FLOAT", {"default": 0, "min": -10, "max": 10, "step": 0.01}), # bbox向上扩展，按高度比例
+                "grow_bottom": ("FLOAT", {"default": 0, "min": -10, "max": 10, "step": 0.01}),
+                "grow_left": ("FLOAT", {"default": 0, "min": -10, "max": 10, "step": 0.01}),
+                "grow_right": ("FLOAT", {"default": 0, "min": -10, "max": 10, "step": 0.01}),
+                "rounded_rect_radius": ("INT", {"default": 50, "min": 0, "max": 100, "step": 1}),
+                "anti_aliasing": ("INT", {"default": 2, "min": 0, "max": 16, "step": 1}),
+            },
+            "optional": {
+            }
+        }
+
+    RETURN_TYPES = ("MASK",)
+    RETURN_NAMES = ("mask",)
+    FUNCTION = 'draw_bbox_mask_v2'
+    CATEGORY = '😺dzNodes/LayerMask'
+
+    def draw_bbox_mask_v2(self, image, bboxes, grow_top, grow_bottom, grow_left, grow_right,
+                          rounded_rect_radius, anti_aliasing):
+
+        ret_masks = []
+        for index in range(len(image)):
+            img = tensor2pil(image[index].unsqueeze(0))
+            mask = Image.new("L", img.size, color='black')
+            bboxes_i = bboxes[index]
+            if grow_top or grow_bottom or grow_left or grow_right:
+                new_bboxes_i = []
+                for bbox in bboxes_i:
+                    try:
+                        if len(bbox) == 0:
+                            continue
+                        else:
+                            x1, y1, x2, y2 = bbox
+                    except ValueError:
+                        if len(bbox) == 0:
+                            continue
+                        else:
+                            x1, y1, x2, y2 = bbox[index]
+                    w = x2 - x1
+                    h = y2 - y1
+                    if grow_top:
+                        y1 = int(y1 - h * grow_top)
+                    if grow_bottom:
+                        y2 = int(y2 + h * grow_bottom)
+                    if grow_left:
+                        x1 = int(x1 - w * grow_left)
+                    if grow_right:
+                        x2 = int(x2 + w * grow_right)
+                    if y1 > y2:
+                        y1, y2 = y2, y1
+                    if x1 > x2:
+                        x1, x2 = x2, x1
+                    if y2 - y1 < 1:
+                        y2 += 1
+                    if x2 - x1 < 1:
+                        x2 += 1
+                    new_bboxes_i.append((x1, y1, x2, y2))
+                bboxes_i = new_bboxes_i
+            mask = draw_rounded_rectangle(mask, rounded_rect_radius, bboxes_i, anti_aliasing)
+            ret_masks.append(pil2tensor(mask))
+
+        log(f"{self.NODE_NAME} Processed {len(ret_masks)} mask(s).", message_type='finish')
+        return (torch.cat(ret_masks, dim=0),)
+
+
 NODE_CLASS_MAPPINGS = {
     "LayerMask: BBoxJoin": LS_BBOXES_JOIN,
+    "LayerMask: DrawBBoxMaskV2": LS_DrawBBoxMaskV2,
     "LayerMask: DrawBBoxMask": LS_DrawBBoxMask,
     "LayerMask: ObjectDetectorFL2": LS_OBJECT_DETECTOR_FL2,
     "LayerMask: ObjectDetectorMask": LS_OBJECT_DETECTOR_MASK,
@@ -478,6 +561,7 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LayerMask: BBoxJoin": "LayerMask: BBox Join(Advance)",
+    "LayerMask: DrawBBoxMaskV2": "LayerMask: Draw BBox Mask V2(Advance)",
     "LayerMask: DrawBBoxMask": "LayerMask: Draw BBox Mask(Advance)",
     "LayerMask: ObjectDetectorFL2": "LayerMask: Object Detector Florence2(Advance)",
     "LayerMask: ObjectDetectorMask": "LayerMask: Object Detector Mask(Advance)",

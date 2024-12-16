@@ -145,13 +145,13 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Commit [DrawBBOXMaskV2](#DrawBBOXMaskV2) node, can draw rounded rectangle masks.
 * Commit [SmolLM2](#SmolLM2), [SmolVLM](#SmolVLM), [LoadSmolLM2Model](#LoadSmolLM2Model) and [LoadSmolVLMModel](#LoadSmolVLMModel) nodes, use SMOL model for text inference and image recognition.
 download the model file from [BaiduNetdisk](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) and copy to ```ComfyUI/models/smol``` folder.
 * Florence2 add support [gokaygokay/Florence-2-Flux-Large](https://huggingface.co/gokaygokay/Florence-2-Flux-Large) and [gokaygokay/Florence-2-Flux](https://huggingface.co/gokaygokay/Florence-2-Flux) models, 
 download Florence-2-Flux-Large and Florence-2-Flux folder from [BaiduNetdisk](https://pan.baidu.com/s/1wBwJZjgMUKt0zluLAetMOQ?pwd=d6fb) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/florence2) and copy to ```ComfyUI\models\florence2`` folder.
 * Discard the dependencies required for the [ObjectDetector YOLOWorld](#ObjectDetectorYOLOWorld) node from the requirements. txt file. To use this node, please manually install the dependency package.
 * Strip some nodes from [ComfyUI Layer Style](https://github.com/chflame163/ComfyUI_LayerStyle) to this repository.
-
 
 
 ## Description
@@ -798,7 +798,8 @@ Node Options:
 * bbox_select: Select the input box data. There are three options: "all" to select all, "first" to select the box with the highest confidence, and "by_index" to specify the index of the box.
 * select_index: This option is valid when bbox_delect is 'by_index'. 0 is the first one. Multiple values can be entered, separated by any non numeric character, including but not limited to commas, periods, semicolons, spaces or letters, and even Chinese.
 
-### <a id="table1">ObjectDetectorYOLOWorld</a>(Obsoleted. If you want to continue using it, you need to manually install the dependency package)
+### <a id="table1">ObjectDetectorYOLOWorld</a>
+#### (Obsoleted. If you want to continue using it, you need to manually install the dependency package)    
 Due to potential installation issues with dependency packages, this node has been obsoleted. To use, please manually install the following dependency packages:
 ```
 pip install inference-cli>=0.13.0
@@ -871,6 +872,15 @@ Node Options:
 * grow_bottom: Each BBox expands downwards as a percentage of its height, positive values indicating downward expansion and negative values indicating upward expansion.
 * grow_left: Each BBox expands to the left as a percentage of its width, positive values expand to the left and negative values expand to the right.
 * grow_right: Each BBox expands to the right as a percentage of its width, positive values indicate expansion to the right and negative values indicate expansion to the left.
+
+### <a id="table1">DrawBBoxMaskV2</a> 
+Add rounded rectangle drawing to the [DrawBBoxMask](#DrawBBoxMask) node.    
+![image](image/draw_bbox_mask_v2_example.jpg)
+
+Add Options:  
+![image](image/draw_bbox_mask_v2_node.jpg)
+* rounded_rect_radius: Rounded rectangle radius. The range is 0-100, and the larger the value, the more pronounced the rounded corners.
+* anti_aliasing: Anti aliasing, ranging from 0-16, with larger values indicating less pronounced aliasing. Excessive values will significantly reduce the processing speed of nodes.
 
 ### <a id="table1">EVF-SAMUltra</a>
 
