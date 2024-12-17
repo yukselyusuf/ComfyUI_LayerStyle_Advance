@@ -6,17 +6,6 @@ select_list = ["all", "first", "by_index"]
 sort_method_list = ["left_to_right", "top_to_bottom", "big_to_small", "confidence"]
 
 
-# 规范bbox，保证x1 < x2, y1 < y2, 并返回int
-def standardize_bbox(bboxes:list) -> list:
-    ret_bboxes = []
-    for bbox in bboxes:
-        x1 = int(min(bbox[0], bbox[2]))
-        y1 = int(min(bbox[1], bbox[3]))
-        x2 = int(max(bbox[0], bbox[2]))
-        y2 = int(max(bbox[1], bbox[3]))
-        ret_bboxes.append([x1, y1, x2, y2])
-    return ret_bboxes
-
 def sort_bboxes(bboxes:list, method:str) -> list:
     sorted_bboxes = []
     if method == "left_to_right":

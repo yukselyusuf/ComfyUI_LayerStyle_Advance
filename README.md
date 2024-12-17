@@ -145,6 +145,8 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Commit [Gemini](#Gemini) node, Use Gemini API for text or visual inference.
+* Commit [ObjectDetectorGemini](#ObjectDetectorGemini) node, Use Gemini API for object detection.
 * Commit [DrawBBOXMaskV2](#DrawBBOXMaskV2) node, can draw rounded rectangle masks.
 * Commit [SmolLM2](#SmolLM2), [SmolVLM](#SmolVLM), [LoadSmolLM2Model](#LoadSmolLM2Model) and [LoadSmolVLMModel](#LoadSmolVLMModel) nodes, use SMOL model for text inference and image recognition.
 download the model file from [BaiduNetdisk](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) or [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) and copy to ```ComfyUI/models/smol``` folder.
@@ -290,6 +292,23 @@ Node Options:
 * temperature: The temperature parameter of LLM defaults to 0.5.
 * max_new_tokens: The max_new_token parameter of LLM defaults to 512.
 
+### <a id="table1">Gemini</a>
+Use Google Gemini API for text and visual models for local inference. Can be used to generate prompt words, process prompt words, or infer prompt words from images.
+Apply for your API key on [Google AI Studio](https://makersuite.google.com/app/apikey),  And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```google_api_key=``` and save it.
+![image](image/gemini_example.jpg)    
+
+Node options:   
+![image](image/gemini_node.jpg)    
+
+* image_1: Optional input. If there is an image input here, please explain the purpose of 'image_1' in user_dempt.
+* image_2: Optional input. If there is an image input here, please explain the purpose of 'image_2' in user_dempt.
+* model: Choose the Gemini model.
+* max_output_tokens: The max_output_token parameter of Gemini defaults to 4096.
+* temperature: The temperature parameter of Gemini defaults to 0.5.
+* words_limit: The default word limit for replies is 200.
+* system_prompt: The system prompt.
+* user_prompt: The user prompt.
+
 ### <a id="table1">SmolLM2</a>
 Use the  [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct) model for local inference.
 
@@ -383,7 +402,7 @@ Node options:
 ### <a id="table1">PromptTagger</a>
 
 Inference the prompts based on the image. it can replace key word for the prompt. This node currently uses Google Gemini API as the backend service. Please ensure that the network environment can use Gemini normally.
-Please apply for your API key on [Google AI Studio](https://makersuite.google.com/app/apikey),  And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```google_api_key=``` and save it.
+Apply for your API key on [Google AI Studio](https://makersuite.google.com/app/apikey),  And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```google_api_key=``` and save it.
 ![image](image/prompt_tagger_example.jpg)    
 
 Node options:   
@@ -397,7 +416,7 @@ Node options:
 ### <a id="table1">PromptEmbellish</a>
 
 Enter simple prompt words, output polished prompt words, and support inputting images as references, and support Chinese input. This node currently uses Google Gemini API as the backend service. Please ensure that the network environment can use Gemini normally.
-Please apply for your API key on [Google AI Studio](https://makersuite.google.com/app/apikey),  And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```google_api_key=``` and save it.
+Apply for your API key on [Google AI Studio](https://makersuite.google.com/app/apikey),  And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```google_api_key=``` and save it.
 ![image](image/prompt_embellish_example.jpg)    
 
 Node options:   
@@ -782,6 +801,18 @@ Node Options:
 * process_detail: Set to false here will skip edge processing to save runtime.
 * device: Only cuda can be used.
 * max_megapixels: Set the maximum size for VitMate operations.A larger size will result in finer mask edges, but it will lead to a significant decrease in computation speed.
+
+### <a id="table1">ObjectDetectorGemini</a>
+Use Gemini API for object detection.
+Apply for your API key on [Google AI Studio](https://makersuite.google.com/app/apikey),  And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```google_api_key=``` and save it.
+![image](image/object_detector_gemini_example.jpg)
+
+Node Options:  
+![image](image/object_detector_gemini_node.jpg)    
+
+* image: The input image.
+* model: Selete Gemini model.
+* prompt: Describe the object that needs to be identified.
 
 ### <a id="table1">ObjectDetectorFL2</a>
 

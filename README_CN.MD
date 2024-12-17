@@ -121,6 +121,8 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* 添加 [Gemini](#Gemini) 节点， 使用Gemini API进行文本或视觉推理。
+* 添加 [ObjectDetectorGemini](#ObjectDetectorGemini) 节点， 使用Gemini API进行物体检测。
 * 添加 [DrawBBOXMaskV2](#DrawBBOXMaskV2) 节点，可绘制圆角矩形遮罩。
 * 添加 [SmolLM2](#SmolLM2), [SmolVLM](#SmolVLM), [LoadSmolLM2Model](#LoadSmolLM2Model) 和 [LoadSmolVLMModel](#LoadSmolVLMModel) 节点，使用smol轻量级本地模型进行文本推理和图片识别。
 从[百度网盘](https://pan.baidu.com/s/1_jeNosYdDqqHkzpnSNGfDQ?pwd=to5b) 或 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/smol) 下载模型文件至```ComfyUI/models/smol```文件夹。
@@ -263,6 +265,24 @@ JoyCaption2的extra_options参数节点。
 * do_sample: LLM的do_sample参数，默认为True。
 * temperature: LLM的temperature参数，默认为0.5。
 * max_new_tokens: LLM的max_new_tokens参数，默认为512。
+
+### <a id="table1">Gemini</a>
+使用Google Gemini API进行文字及视觉模型进行本地推理。可以用于生成提示词，加工提示词或者反推图片的提示词。
+请在[Google AI Studio](https://makersuite.google.com/app/apikey)申请你的API key, 并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```google_api_key=```后面填入你的API key并保存。
+![image](image/gemini_example.jpg)    
+
+节点选项说明:   
+![image](image/gemini_node.jpg)    
+
+* image_1: 可选输入。如果此处有图片输入，需在user_prompt中说明```image_1```的用途。
+* image_2: 可选输入。如果此处有图片输入，需在user_prompt中说明```image_2```的用途。
+* model: 选择Gemini模型。
+* max_output_tokens: Gemini的max_output_tokens参数，默认为4096。
+* temperature: Gemini的temperature参数，默认为0.5。
+* words_limit: 回复字数限制，默认为200。
+* system_prompt: 系统提示词。
+* user_prompt: 用户提示词。
+
 
 ### <a id="table1">SmolLM2</a>
 使用 [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct) 轻量级文本模型进行本地推理。
@@ -712,6 +732,19 @@ https://github.com/user-attachments/assets/b2a45c96-4be1-4470-8ceb-addaf301b0cb
 * process_detail: 此处设为False将跳过边缘处理以节省运行时间。
 * device: 本节点限制仅使用cuda。
 * max_megapixels: 设置vitmatte运算的最大尺寸。更大的尺寸将获得更精细的遮罩边缘，但会导致运算速度明显下降。
+
+### <a id="table1">ObjectDetectorGemini</a>
+使用Gemini API进行物体检测。 
+请在[Google AI Studio](https://makersuite.google.com/app/apikey)申请你的API key, 并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```google_api_key=```后面填入你的API key并保存。
+![image](image/object_detector_gemini_example.jpg)
+
+节点选项说明:  
+![image](image/object_detector_gemini_node.jpg)    
+
+* image: 图片输入。
+* model: Gemini模型。
+* prompt: 描述需要识别的对象。
+
 
 ### <a id="table1">ObjectDetectorFL2</a>
 使用Florence2模型识别图片中的对象，并输出识别框数据。    
