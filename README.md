@@ -306,6 +306,7 @@ Node options:
 * max_output_tokens: The max_output_token parameter of Gemini defaults to 4096.
 * temperature: The temperature parameter of Gemini defaults to 0.5.
 * words_limit: The default word limit for replies is 200.
+* response_language: The language of the reply.
 * system_prompt: The system prompt.
 * user_prompt: The user prompt.
 

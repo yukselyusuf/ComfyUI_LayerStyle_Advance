@@ -280,6 +280,7 @@ JoyCaption2的extra_options参数节点。
 * max_output_tokens: Gemini的max_output_tokens参数，默认为4096。
 * temperature: Gemini的temperature参数，默认为0.5。
 * words_limit: 回复字数限制，默认为200。
+* response_language: 回复的语言。
 * system_prompt: 系统提示词。
 * user_prompt: 用户提示词。
 
@@ -637,7 +638,6 @@ all_layers: 包含全部图层的批量图片。
 ![image](image/load_ben_model_node.jpg)  
 
 * model: 选择模型。目前仅有Ben_Base 模型可选。
-
 
 
 ### <a id="table1">SegmentAnythingUltra</a>
