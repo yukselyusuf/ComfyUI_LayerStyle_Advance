@@ -1,9 +1,11 @@
 # layerstyle advance
 
 import json
+import re
 from .imagefunc import *
 
-
+def is_only_digits_and_spaces(s:str) -> bool:
+    return bool(re.fullmatch(r'[0-9\s]*', s))
 
 class LS_GeminiNode:
 
@@ -141,6 +143,11 @@ class LS_OBJECT_DETECTOR_Gemini:
             _image = tensor2pil(img.unsqueeze(0)).convert('RGB')
             response = g_model.generate_content([_image, g_prompt])
             ret_text = response.text
+            if not is_only_digits_and_spaces(ret_text):
+                ret_bboxes.append([(-1, -1, 0, 0)])
+                ret_previews.append(pil2tensor(_image))
+                log(f"{self.NODE_NAME} no object found", message_type='warning')
+                continue
 
             y1,x1,y2,x2 = [int(x) for x in ret_text.split()]
 
@@ -153,10 +160,7 @@ class LS_OBJECT_DETECTOR_Gemini:
             preview = draw_bounding_boxes(_image.convert("RGB"), bboxes, color="random", line_width=-1)
             ret_previews.append(pil2tensor(preview))
 
-            if len(bboxes) == 0:
-                log(f"{self.NODE_NAME} no object found", message_type='warning')
-            else:
-                log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+            log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
             ret_bboxes.append(bboxes)
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0),)
