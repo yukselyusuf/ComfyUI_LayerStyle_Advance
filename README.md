@@ -145,6 +145,9 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Commit [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) and [LoadSegmentAnythingModels](#LoadSegmentAnythingModels) nodes, Avoid duplicating model loading when using multiple SAM nodes.
+* Commit [ZhipuGLM4](#ZhipuGLM4) and [ZhipuGLM4V](#ZhipuGLM4V) nodes, Use the Zhipu API for textual and visual inference. Among the current Zhipu models, GLM-4-Flash and glm-4v-flash models are free.
+Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), fill your API key in ```zhipu_api_key=```.
 * Commit [Gemini](#Gemini) node, Use Gemini API for text or visual inference.
 * Commit [ObjectDetectorGemini](#ObjectDetectorGemini) node, Use Gemini API for object detection.
 * Commit [DrawBBOXMaskV2](#DrawBBOXMaskV2) node, can draw rounded rectangle masks.
@@ -309,6 +312,38 @@ Node options:
 * response_language: The language of the reply.
 * system_prompt: The system prompt.
 * user_prompt: The user prompt.
+
+### <a id="table1">ZhipuGLM4</a>
+Use the Zhipu API for text inference, supporting multi node context concatenation.   
+Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```zhipu_api_key=``` and save it.
+![image](image/zhipuglm4_example.jpg)    
+
+Node Options:   
+![image](image/zhipuglm4_node.jpg)    
+
+* history: History of GLM4 node, optional input. If there is input here, historical records will be used as context.
+* model: Select GLM4 model. GLM-4-Flash is a free model.
+* user_prompt: The user prompt.
+* history_length: History record length. Records exceeding this length will be discarded.
+
+Outputs:
+* text: Output text of GLM4.
+* history: History of GLM4 conversations.
+
+### <a id="table1">ZhipuGLM4</a>
+Use the Zhipu API for visual inference.
+Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```zhipu_api_key=``` and save it.
+
+Node Options:   
+![image](image/zhipuglm4v_node.jpg)    
+
+* image: The input image.
+* model: Select the GLM4V model. glm-4v-flash is a free model.
+* user_prompt: The user prompt.
+
+Output:
+* text: Output text of GLM4V.
+
 
 ### <a id="table1">SmolLM2</a>
 Use the  [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct) model for local inference.
@@ -746,6 +781,17 @@ On the basis of SegmentAnythingUltra, the following changes have been made:
 * detail_dilate: The edge of the mask expands outward. the larger the value, the wider the range of outward repair.
 * device: Set whether the VitMatte to use cuda.
 * max_megapixels: Set the maximum size for VitMate operations.
+
+### <a id="table1">SegmentAnythingUltraV3</a>
+Separate model loading from inference nodes to avoid duplicate model loading when using multiple SAM nodes.
+  
+![image](image/segment_anything_ultra_v3_node.jpg)
+
+### <a id="table1">LoadSegmentAnythingModels</a>
+Load SegmentAnything models.
+  
+![image](image/load_segmentanything_model_node.jpg)
+
 
 ### <a id="table1">SAM2Ultra</a>
 

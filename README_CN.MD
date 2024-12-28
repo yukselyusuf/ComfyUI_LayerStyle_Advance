@@ -121,6 +121,9 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* 添加 [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) 和 [LoadSegmentAnythingModels](#LoadSegmentAnythingModels)节点， 在使用多个SAM节点时避免重复加载模型。
+* 添加 [ZhipuGLM4](#ZhipuGLM4) 和 [ZhipuGLM4V](#ZhipuGLM4V)节点，使用智谱API进行文本和视觉推理。目前的智谱模型中，GLM-4-Flash和glm-4v-flash模型是免费的。
+在[https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)免费申请API Key，填入插件目录下的```api_key.ini```。
 * 添加 [Gemini](#Gemini) 节点， 使用Gemini API进行文本或视觉推理。
 * 添加 [ObjectDetectorGemini](#ObjectDetectorGemini) 节点， 使用Gemini API进行物体检测。
 * 添加 [DrawBBOXMaskV2](#DrawBBOXMaskV2) 节点，可绘制圆角矩形遮罩。
@@ -284,6 +287,38 @@ JoyCaption2的extra_options参数节点。
 * system_prompt: 系统提示词。
 * user_prompt: 用户提示词。
 
+* 添加 [ZhipuGLM4](#ZhipuGLM4) 和 [ZhipuGLM4V](#ZhipuGLM4V)节点， 
+
+### <a id="table1">ZhipuGLM4</a>
+使用智谱API进行文本推理，支持多节点上下文串联。        
+在[https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)免费申请API Key，并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```zhipu_api_key=```后面填入你的API key并保存。
+![image](image/zhipuglm4_example.jpg)    
+
+节点选项说明:   
+![image](image/zhipuglm4_node.jpg)    
+
+* history: GLM4节点的历史记录，可选输入。如果此处有输入，将使用历史记录作为上下文。
+* model: 选择GLM4模型。GLM-4-Flash为免费模型。
+* user_prompt: 用户提示词。
+* history_length: 历史记录长度。超出该长度的记录将被截断。
+
+输出:
+* text: GLM4的输出。
+* history: GLM4对话历史记录。
+
+### <a id="table1">ZhipuGLM4</a>
+使用智谱API进行视觉推理。        
+在[https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)免费申请API Key，并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```zhipu_api_key=```后面填入你的API key并保存。
+
+节点选项说明:   
+![image](image/zhipuglm4v_node.jpg)    
+
+* image: 输入的图片。
+* model: 选择GLM4V模型。glm-4v-flash为免费模型。
+* user_prompt: 用户提示词。
+
+输出:
+* text: GLM4V的输出。
 
 ### <a id="table1">SmolLM2</a>
 使用 [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct) 轻量级文本模型进行本地推理。
@@ -678,6 +713,17 @@ SegmentAnythingUltra的V2升级版，增加了VITMatte边缘处理方法。
 * detail_dilate: 遮罩边缘向外扩张范围。数值越大，向外修复的范围越大。
 * device: 设置是否使用cuda。
 * max_megapixels: 设置vitmatte运算的最大尺寸。
+
+### <a id="table1">SegmentAnythingUltraV3</a>
+将模型加载与推理节点分离，在使用多个SAM节点时避免重复加载模型。
+  
+![image](image/segment_anything_ultra_v3_node.jpg)
+
+### <a id="table1">LoadSegmentAnythingModels</a>
+加载SegmentAnything模型。
+  
+![image](image/load_segmentanything_model_node.jpg)
+
 
 ### <a id="table1">SAM2Ultra</a>
 本节点是[kijai/ComfyUI-segment-anything-2](https://github.com/kijai/ComfyUI-segment-anything-2)的改造版本。感谢[kijai](https://github.com/kijai)为ComfyUI社区做出的巨大贡献。    
