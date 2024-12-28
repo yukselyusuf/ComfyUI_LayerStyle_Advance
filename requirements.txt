@@ -34,3 +34,4 @@ blind-watermark
 qrcode
 pyzbar
 psd-tools
+zhipuai

@@ -4,7 +4,6 @@ import torch
 import base64
 import requests
 from io import BytesIO
-from zhipuai import ZhipuAI
 import folder_paths
 from PIL import Image
 from .imagefunc import log, tensor2pil, get_api_key
@@ -34,6 +33,7 @@ class LS_ZhipuImage:
     CATEGORY = '😺dzNodes/LayerUtility'
 
     def zhipu_glm4v(self, image, model, user_prompt,):
+        from zhipuai import ZhipuAI
         client = ZhipuAI(api_key=get_api_key('zhipu_api_key'))  # APIKey
 
 
@@ -90,7 +90,7 @@ class LS_ZhipuText:
     CATEGORY = '😺dzNodes/LayerUtility'
 
     def zhipu_glm4(self, model, user_prompt, history_length, history=None):
-
+        from zhipuai import ZhipuAI
         client = ZhipuAI(api_key=get_api_key('zhipu_api_key'))  # APIKey
 
         if history is not None:
