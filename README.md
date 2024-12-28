@@ -782,10 +782,15 @@ On the basis of SegmentAnythingUltra, the following changes have been made:
 * device: Set whether the VitMatte to use cuda.
 * max_megapixels: Set the maximum size for VitMate operations.
 
+
 ### <a id="table1">SegmentAnythingUltraV3</a>
 Separate model loading from inference nodes to avoid duplicate model loading when using multiple SAM nodes.
-  
+![image](image/segment_anything_ultra_v3_example.jpg)  
+
+Node Options:
 ![image](image/segment_anything_ultra_v3_node.jpg)
+Same as SegmentAnythingUltra, removed ```sam_comodel``` and ```ground-dino_comodel```, changed them to be obtained from node input.
+
 
 ### <a id="table1">LoadSegmentAnythingModels</a>
 Load SegmentAnything models.

@@ -716,8 +716,11 @@ SegmentAnythingUltra的V2升级版，增加了VITMatte边缘处理方法。
 
 ### <a id="table1">SegmentAnythingUltraV3</a>
 将模型加载与推理节点分离，在使用多个SAM节点时避免重复加载模型。
-  
+![image](image/segment_anything_ultra_v3_example.jpg)  
+
+节点选项说明:
 ![image](image/segment_anything_ultra_v3_node.jpg)
+选项与SegmentAnythingUltra节点一致，去掉了sam_model和ground_dino_model改为从节点输入获取。
 
 ### <a id="table1">LoadSegmentAnythingModels</a>
 加载SegmentAnything模型。
