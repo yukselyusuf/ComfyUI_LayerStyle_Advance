@@ -330,7 +330,7 @@ Outputs:
 * text: Output text of GLM4.
 * history: History of GLM4 conversations.
 
-### <a id="table1">ZhipuGLM4</a>
+### <a id="table1">ZhipuGLM4V</a>
 Use the Zhipu API for visual inference.
 Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```zhipu_api_key=``` and save it.
 

@@ -306,7 +306,7 @@ JoyCaption2的extra_options参数节点。
 * text: GLM4的输出。
 * history: GLM4对话历史记录。
 
-### <a id="table1">ZhipuGLM4</a>
+### <a id="table1">ZhipuGLM4V</a>
 使用智谱API进行视觉推理。        
 在[https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)免费申请API Key，并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```zhipu_api_key=```后面填入你的API key并保存。
 
