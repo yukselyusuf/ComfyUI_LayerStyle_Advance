@@ -121,6 +121,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* 添加 [DeepSeekAPI](DeepSeekAPI) 节点，使用DeepSeek API进行文本推理。
 * 添加 [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) 和 [LoadSegmentAnythingModels](#LoadSegmentAnythingModels)节点， 在使用多个SAM节点时避免重复加载模型。
 * 添加 [ZhipuGLM4](#ZhipuGLM4) 和 [ZhipuGLM4V](#ZhipuGLM4V)节点，使用智谱API进行文本和视觉推理。目前的智谱模型中，GLM-4-Flash和glm-4v-flash模型是免费的。
 在[https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)免费申请API Key，填入插件目录下的```api_key.ini```。
@@ -287,7 +288,30 @@ JoyCaption2的extra_options参数节点。
 * system_prompt: 系统提示词。
 * user_prompt: 用户提示词。
 
-* 添加 [ZhipuGLM4](#ZhipuGLM4) 和 [ZhipuGLM4V](#ZhipuGLM4V)节点， 
+### <a id="table1">DeepSeekAPI</a>
+使用DeepSeek API进行文本推理，支持多节点上下文串联。        
+在[https://platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys)申请API Key，并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```deepseek_api_key=```后面填入你的API key并保存。
+![image](image/deepseek_api_example.jpg)    
+
+节点选项说明:   
+![image](image/deepseek_api_node.jpg)    
+
+* history: DeepSeekAPI节点的历史记录，可选输入。如果此处有输入，将使用历史记录作为上下文。
+* model: 选择DeepSeek模型，目前仅有一个选项："deepseek-chat"即DeepSeek-V3模型。
+* max_tokens: DeepSeek的max_tokens参数，默认为4096。
+* temperature: DeepSeek的temperature参数，默认为1。
+* top_p: DeepSeek的top_p参数，默认为1。
+* presence_penalty: DeepSeek的presence_penalty参数，默认为0。
+* frequency_penalty: DeepSeek的frequency_penalty参数，默认为0。
+* history_length: 历史记录长度。超出该长度的记录将被截断。
+* system_prompt: 系统提示词。
+* user_prompt: 用户提示词。
+
+
+输出:
+* text: DeepSeek的输出。
+* history: DeepSeek对话历史记录。
+
 
 ### <a id="table1">ZhipuGLM4</a>
 使用智谱API进行文本推理，支持多节点上下文串联。        
@@ -306,7 +330,7 @@ JoyCaption2的extra_options参数节点。
 * text: GLM4的输出。
 * history: GLM4对话历史记录。
 
-### <a id="table1">ZhipuGLM4V</a>
+### <a id="table1">ZhipuGLM4</a>
 使用智谱API进行视觉推理。        
 在[https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)免费申请API Key，并将其填到```api_key.ini```, 这个文件位于插件根目录下, 默认名字是```api_key.ini.example```, 初次使用这个文件需将文件后缀改为.ini。用文本编辑软件打开，在```zhipu_api_key=```后面填入你的API key并保存。
 

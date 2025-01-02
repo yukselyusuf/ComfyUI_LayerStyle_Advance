@@ -145,6 +145,7 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Commit [DeepSeekAPI](DeepSeekAPI) node, Use DeepSeek API for text inference.
 * Commit [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) and [LoadSegmentAnythingModels](#LoadSegmentAnythingModels) nodes, Avoid duplicating model loading when using multiple SAM nodes.
 * Commit [ZhipuGLM4](#ZhipuGLM4) and [ZhipuGLM4V](#ZhipuGLM4V) nodes, Use the Zhipu API for textual and visual inference. Among the current Zhipu models, GLM-4-Flash and glm-4v-flash models are free.
 Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), fill your API key in ```zhipu_api_key=```.
@@ -313,6 +314,29 @@ Node options:
 * system_prompt: The system prompt.
 * user_prompt: The user prompt.
 
+### <a id="table1">DeepSeekAPI</a>
+Use the DeepSeek API for text inference, supporting multi node context concatenation.         
+Apply for an API key for free at [https://platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys), And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```deepseek_api_key=``` and save it.
+![image](image/deepseek_api_example.jpg)    
+
+Node Options:   
+![image](image/deepseek_api_node.jpg)    
+
+* history: History of DeepSeekAPI node, optional input. If there is input here, historical records will be used as context.
+* model: Choose the DeepSeek model, currently there is only one option: "deepseek-chat", which is the DeepSeek-V3 model.
+* max_tokens: The max_token parameter of DeepSeek defaults to 4096.
+* temperature: The temperature parameter of DeepSeek defaults to 1. 
+* top_p: The top_p parameter of DeepSeek defaults to 1.
+* presence_penalty: The presence_penalty parameter of DeepSeek defaults to 0.
+* frequency_penalty: The frequency_penalty parameter of DeepSeek defaults to 0.
+* history_length: History record length. Records exceeding this length will be discarded.
+* system_prompt: The system prompt.
+* user_prompt: The user prompt.
+
+Outputs:
+* text: Output text of DeepSeek.
+* history: History of DeepSeek conversations.
+
 ### <a id="table1">ZhipuGLM4</a>
 Use the Zhipu API for text inference, supporting multi node context concatenation.   
 Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```zhipu_api_key=``` and save it.
@@ -330,7 +354,7 @@ Outputs:
 * text: Output text of GLM4.
 * history: History of GLM4 conversations.
 
-### <a id="table1">ZhipuGLM4V</a>
+### <a id="table1">ZhipuGLM4</a>
 Use the Zhipu API for visual inference.
 Apply for an API key for free at [https://bigmodel.cn/usercenter/proj-mgmt/apikeys](https://bigmodel.cn/usercenter/proj-mgmt/apikeys), And fill it in ```api_key.ini```, this file is located in the root directory of the plug-in, and the default name is ```api_key.ini.example```. to use this file for the first time, you need to change the file suffix to ```.ini```. Open it using text editing software, fill in your API key after ```zhipu_api_key=``` and save it.
 

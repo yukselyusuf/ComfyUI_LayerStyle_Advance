@@ -35,3 +35,4 @@ qrcode
 pyzbar
 psd-tools
 zhipuai
+openai
