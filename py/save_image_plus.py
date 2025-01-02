@@ -149,8 +149,8 @@ class SaveImagePlus:
                     workflow = (extra_pnginfo or {}).get('workflow')
                     if workflow is None:
                         log('No workflow found, skipping saving of JSON')
-                    with open(f'{json_file_name}', 'w') as workflow_file:
-                        json.dump(workflow, workflow_file)
+                    with open(f'{json_file_name}', 'w', encoding='utf-8') as workflow_file:
+                        json.dump(workflow, workflow_file, ensure_ascii=False, indent=4)
                         log(f'Saved workflow to {json_file_name}')
                 except Exception as e:
                     log(
