@@ -1264,8 +1264,8 @@ def image_beauty(image:Image, level:int=50) -> Image:
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     factor = (level / 50.0)**2
     d = int((image.width + image.height) / 256 * factor)
-    sigmaColor = int((image.width + image.height) / 256 * factor)
-    sigmaSpace = int((image.width + image.height) / 160 * factor)
+    sigmaColor = max(1, float((image.width + image.height) / 256 * factor))
+    sigmaSpace = max(1, float((image.width + image.height) / 160 * factor))
     img_bit = cv2.bilateralFilter(src=img, d=d, sigmaColor=sigmaColor, sigmaSpace=sigmaSpace)
     ret_image = cv2.cvtColor(img_bit, cv2.COLOR_BGR2RGB)
     return cv22pil(ret_image)
@@ -1478,7 +1478,7 @@ def create_mask_from_color_tensor(image:Image, color:str, tolerance:int=0) -> Im
 def load_RMBG_model():
     from .briarmbg import BriaRMBG
     current_directory = os.path.dirname(os.path.abspath(__file__))
-    device = comfy.model_management.get_torch_device()
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     net = BriaRMBG()
     model_path = ""
     try:
@@ -1510,8 +1510,8 @@ def RMBG(image:Image) -> Image:
     mi = torch.min(result)
     result = (result - mi) / (ma - mi)
     im_array = (result * 255).cpu().data.numpy().astype(np.uint8)
-    return Image.fromarray(np.squeeze(im_array))
-
+    _mask = torch.from_numpy(np.squeeze(im_array).astype(np.float32))
+    return tensor2pil(_mask)
 
 def guided_filter_alpha(image:torch.Tensor, mask:torch.Tensor, filter_radius:int) -> torch.Tensor:
     sigma = 0.15
