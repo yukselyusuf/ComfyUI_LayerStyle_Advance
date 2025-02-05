@@ -733,15 +733,14 @@ Node Options:
 
 
 ### <a id="table1">BenUltra</a>
-It is the implementation of [PramaLLC/BEN](https://huggingface.co/PramaLLC/BEN)  project in ComfyUI. Thank you to the original author.
-   
-Download the ```BEN_Base.pth``` and ```config.json``` from [huggingface](https://huggingface.co/PramaLLC/BEN/tree/main) or [BaiduNetdisk](https://pan.baidu.com/s/17mdBxfBl_R97mtNHuiHsxQ?pwd=2jn3) and copy to ```ComfyUI/models/BEN``` folder.
+It is the implementation of [PramaLLC/BEN](https://huggingface.co/PramaLLC/BEN)  project in ComfyUI. Thank you to the original author. 
+Download all files from [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/BEN) or [BaiduNetdisk](https://pan.baidu.com/s/17mdBxfBl_R97mtNHuiHsxQ?pwd=2jn3) and copy to ```ComfyUI/models/BEN``` folder.
 
 ![image](image/ben_ultra_example.jpg)
 
 Node Options：
 ![image](image/ben_ultra_node.jpg)
-* ben_model: Ben model input.
+* ben_model: Ben model input. There are two models to choose: BEN_Base and BEN2_base.
 * image: Image input.
 * detail_method: Edge processing methods. provides VITMatte, VITMatte(local), PyMatting, GuidedFilter. If the model has been downloaded after the first use of VITMatte, you can use VITMatte (local) afterwards.
 * detail_erode: Mask the erosion range inward from the edge. the larger the value, the larger the range of inward repair.

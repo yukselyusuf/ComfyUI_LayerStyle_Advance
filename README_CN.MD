@@ -673,13 +673,13 @@ all_layers: 包含全部图层的批量图片。
 
 ### <a id="table1">BenUltra</a>
 是[PramaLLC/BEN](https://huggingface.co/PramaLLC/BEN) 项目在ComfyUI中的实现。感谢原作者。    
-从 [huggingface](https://huggingface.co/PramaLLC/BEN/tree/main) 或 [百度网盘](https://pan.baidu.com/s/17mdBxfBl_R97mtNHuiHsxQ?pwd=2jn3)下载```BEN_Base.pth``` 和 ```config.json``` 两个文件并复制到 ```ComfyUI/models/BEN```文件夹。
+从 [huggingface](https://huggingface.co/chflame163/ComfyUI_LayerStyle/tree/main/ComfyUI/models/BEN) 或 [百度网盘](https://pan.baidu.com/s/17mdBxfBl_R97mtNHuiHsxQ?pwd=2jn3)下载全部文件并复制到 ```ComfyUI/models/BEN```文件夹。
 
 ![image](image/ben_ultra_example.jpg)
 
 节点选项说明：
 ![image](image/ben_ultra_node.jpg)
-* ben_model: Ben模型输入。
+* ben_model: Ben模型输入，有BEN_Base和BEN2_base两种模型可选。
 * image: 图片输入。
 * detail_method: 边缘处理方法。提供了VITMatte, VITMatte(local), PyMatting, GuidedFilter。如果首次使用VITMatte后模型已经下载，之后可以使用VITMatte(local)。
 * detail_erode: 遮罩边缘向内侵蚀范围。数值越大，向内修复的范围越大。
