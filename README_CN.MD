@@ -121,6 +121,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* 添加 [Collage](#Collage) 节点，将多张图片拼合为一张大图。
 * 添加 [DeepSeekAPI](DeepSeekAPI) 节点，使用DeepSeek API进行文本推理。
 * 添加 [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) 和 [LoadSegmentAnythingModels](#LoadSegmentAnythingModels)节点， 在使用多个SAM节点时避免重复加载模型。
 * 添加 [ZhipuGLM4](#ZhipuGLM4) 和 [ZhipuGLM4V](#ZhipuGLM4V)节点，使用智谱API进行文本和视觉推理。目前的智谱模型中，GLM-4-Flash和glm-4v-flash模型是免费的。
@@ -137,6 +138,28 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 
 
 ## 节点说明
+
+
+### <a id="table1">Collage</a>
+将输入的批量图片随机拼合为一张大图。
+
+![image](image/collage_example.jpg)    
+
+节点选项说明:   
+![image](image/collage_node.jpg)    
+
+* images: 图片输入。
+* florence2_model: 可选输入，用于物体识别裁切。
+* canvas_width: 输出图片的宽度。
+* canvas_height: 输出图片的高度。
+* border_width: 边框宽度。
+* rounded_rect_radius: 边框圆角半径。
+* uniformity: 图片拼合大小的随机性。取值范围为0-1，值越大，大小随机性越大。
+* background_color: 背景色。
+* seed: 随机种子。
+* control_after_generate: 设置每次执行时种子值的变化。
+* object_prompt: 当接入florence2_model时，此处填写物体识别的提示词。
+
 
 ### <a id="table1">QWenImage2Prompt</a>
 根据图片反推提示词。这个节点是[ComfyUI_VLM_nodes](https://github.com/gokayfem/ComfyUI_VLM_nodes)中的```UForm-Gen2 Qwen Node```节点的重新封装，感谢原作者。

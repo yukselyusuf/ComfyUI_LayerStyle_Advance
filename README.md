@@ -145,6 +145,7 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Commit [Collage](#Collage) node to collage images into one.
 * Commit [DeepSeekAPI](DeepSeekAPI) node, Use DeepSeek API for text inference.
 * Commit [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) and [LoadSegmentAnythingModels](#LoadSegmentAnythingModels) nodes, Avoid duplicating model loading when using multiple SAM nodes.
 * Commit [ZhipuGLM4](#ZhipuGLM4) and [ZhipuGLM4V](#ZhipuGLM4V) nodes, Use the Zhipu API for textual and visual inference. Among the current Zhipu models, GLM-4-Flash and glm-4v-flash models are free.
@@ -161,6 +162,27 @@ download Florence-2-Flux-Large and Florence-2-Flux folder from [BaiduNetdisk](ht
 
 
 ## Description
+
+### <a id="table1">Collage</a>
+Randomly collage the input images into one large image.
+
+![image](image/collage_example.jpg)    
+
+Node Options:   
+![image](image/collage_node.jpg)    
+
+* images: The input images.
+* florence2_model: Optional input for object recognition and cropping.
+* canvas_width: Output the width of the image.
+* canvas_height: Output the height of the image.
+* border_width: The border width.
+* rounded_rect_radius: The border fillet radius.
+* uniformity: The randomness of image stitching size. The value range is 0-1, and the larger the value, the greater the randomness of the size.
+* background_color: The background color.
+* seed: The seed of random number.
+* control_after_generate: Seed change options. If this option is fixed, the generated random number will always be the same.
+* object_prompt: When connecting to florence2_model, fill in the prompt words for object recognition here.
+
 
 ### <a id="table1">QWenImage2Prompt</a>
 

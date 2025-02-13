@@ -124,10 +124,11 @@ class LS_OBJECT_DETECTOR_FL2:
             preview = draw_bounding_boxes(img, bboxes, color="random", line_width=-1)
             ret_previews.append(pil2tensor(preview))
             ret_bboxes.append(standardize_bbox(bboxes))
-            if len(bboxes) == 0:
-                log(f"{self.NODE_NAME} no object found", message_type='warning')
-            else:
-                log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+
+            # if len(bboxes) == 0:
+            #     log(f"{self.NODE_NAME} no object found", message_type='warning')
+            # else:
+            #     log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0))
 
@@ -175,7 +176,9 @@ class LS_OBJECT_DETECTOR_FL2:
                 x2_c = max(x2_c, int(max(polygon[0::2])))
                 y1_c = min(y1_c, int(min(polygon[1::2])))
                 y2_c = max(y2_c, int(max(polygon[1::2])))
-            ret_bboxes.append(x1_c, y1_c, x2_c, y2_c)
+            ret_bboxes.append([x1_c, y1_c, x2_c, y2_c])
+        if len(ret_bboxes) == 0:
+            ret_bboxes.append([x1_c, y1_c, x2_c, y2_c])
         return ret_bboxes
 
 class LS_OBJECT_DETECTOR_MASK:
@@ -226,10 +229,11 @@ class LS_OBJECT_DETECTOR_MASK:
             preview = draw_bounding_boxes(tensor2pil(msk).convert("RGB"), bboxes, color="random", line_width=-1)
             ret_previews.append(pil2tensor(preview))
 
-            if len(bboxes) == 0:
-                log(f"{self.NODE_NAME} no object found", message_type='warning')
-            else:
-                log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+            # if len(bboxes) == 0:
+            #     log(f"{self.NODE_NAME} no object found", message_type='warning')
+            # else:
+            #     log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+
             ret_bboxes.append(standardize_bbox(bboxes))
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0))
@@ -290,10 +294,11 @@ class LS_OBJECT_DETECTOR_YOLO8:
             preview = draw_bounding_boxes(_image.convert("RGB"), bboxes, color="random", line_width=-1)
             ret_previews.append(pil2tensor(preview))
 
-            if len(bboxes) == 0:
-                log(f"{self.NODE_NAME} no object found", message_type='warning')
-            else:
-                log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+            # if len(bboxes) == 0:
+            #     log(f"{self.NODE_NAME} no object found", message_type='warning')
+            # else:
+            #     log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+
             ret_bboxes.append(standardize_bbox(bboxes))
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0),)
@@ -373,10 +378,11 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
             preview = draw_bounding_boxes(tensor2pil(i.unsqueeze(0)).convert('RGB'), bboxes, color="random", line_width=-1)
             ret_previews.append(pil2tensor(preview))
 
-            if len(bboxes) == 0:
-                log(f"{self.NODE_NAME} no object found", message_type='warning')
-            else:
-                log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+            # if len(bboxes) == 0:
+            #     log(f"{self.NODE_NAME} no object found", message_type='warning')
+            # else:
+            #     log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
+
             ret_bboxes.append(standardize_bbox(bboxes))
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0))
