@@ -121,7 +121,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
-* 添加 [DeepseekAPI V2](#DeepseekAPI V2) 节点，支持阿里云和火山引擎的deepseek api。
+* 添加 [DeepseekAPI_V2](#DeepseekAPI_V2) 节点，支持阿里云和火山引擎的deepseek api。
 * 添加 [Collage](#Collage) 节点，将多张图片拼合为一张大图。
 * 添加 [DeepSeekAPI](DeepSeekAPI) 节点，使用DeepSeek API进行文本推理。
 * 添加 [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) 和 [LoadSegmentAnythingModels](#LoadSegmentAnythingModels)节点， 在使用多个SAM节点时避免重复加载模型。
@@ -336,7 +336,7 @@ JoyCaption2的extra_options参数节点。
 * text: DeepSeek的输出。
 * history: DeepSeek对话历史记录。
 
-### <a id="table1">DeepSeekAPI V2</a>
+### <a id="table1">DeepSeekAPI_V2</a>
 在 [DeepSeekAPI](#DeepSeekAPI) 节点基础上增加支持阿里云和火山引擎的deepseek api，这两家中国云服务商将提供更稳定的api服务。    
     
 * 在 [火山引擎](https://console.volcengine.com/ai/api/key/) 申请火山引擎api key, 有50万tokens免费额度，如果在申请时填入我的邀请码 ```27RVS1QN```，将额外获得375万R1模型免费tokens。     
