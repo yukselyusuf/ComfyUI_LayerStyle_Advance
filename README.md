@@ -145,6 +145,7 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Commit [DeepseekAPI V2](#DeepseekAPI V2) noee, supporting AliYun and VolcEngine API.
 * Commit [Collage](#Collage) node to collage images into one.
 * Commit [DeepSeekAPI](DeepSeekAPI) node, Use DeepSeek API for text inference.
 * Commit [SegmentAnythingUltraV3](#SegmentAnythingUltraV3) and [LoadSegmentAnythingModels](#LoadSegmentAnythingModels) nodes, Avoid duplicating model loading when using multiple SAM nodes.
@@ -358,6 +359,21 @@ Node Options:
 Outputs:
 * text: Output text of DeepSeek.
 * history: History of DeepSeek conversations.
+
+### <a id="table1">DeepSeekAPI V2</a>    
+On the basis of the [DeepSeekAPI](#DeepSeekAPI) node, DeepSeek API supporting AliYun and VolcEngine will be added, and these two Chinese cloud service providers will provide more stable API services.
+     
+* On [VolcEngine](https://console.volcengine.com/ai/api/key/) Applying for the VolcEngine API key, there is a free quota of 500 thousand tokens. If you fill in my invitation code ```27RVS1QN``` when applying, you will receive an additional 3.75 million R1 model free tokens.
+
+* On [AliYun](https://bailian.console.aliyun.com/?apiKey=1#/api-key) Apply for AliYun API key.
+
+* Fill in the obtained API key into the fields ```volcengine_api_key``` and ```aliyun_api_key``` of ```api_key.ini```. This file is located in the root directory of the plugin, with a default name of ```api_key.ini.example```. Edit it and change the file extension to '.ini'.
+    
+Add Options:   
+![image](image/deepseek_api_v2_node.jpg)
+
+* time_out: The timeout period is set to 300 seconds by default.
+
 
 ### <a id="table1">ZhipuGLM4</a>
 Use the Zhipu API for text inference, supporting multi node context concatenation.   
