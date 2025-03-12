@@ -121,6 +121,7 @@ If this call came from a _pb2.py file, your generated code is out of date and mu
 ## 更新说明
 **如果本插件更新后出现依赖包错误，请双击运行插件目录下的```install_requirements.bat```(官方便携包)，或 ```install_requirements_aki.bat```(秋叶整合包) 重新安装依赖包。
 
+* 支持numpy 2.x 依赖包。
 * 添加 [DeepseekAPI_V2](#DeepseekAPI_V2) 节点，支持阿里云和火山引擎的deepseek api。
 * 添加 [Collage](#Collage) 节点，将多张图片拼合为一张大图。
 * 添加 [DeepSeekAPI](DeepSeekAPI) 节点，使用DeepSeek API进行文本推理。

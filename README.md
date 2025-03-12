@@ -145,6 +145,7 @@ Please try downgrading the ```protobuf``` dependency package to 3.20.3, or set e
 
 **If the dependency package error after updating,  please double clicking ```repair_dependency.bat``` (for Official ComfyUI Protable) or  ```repair_dependency_aki.bat``` (for ComfyUI-aki-v1.x) in the plugin folder to reinstall the dependency packages.    
 
+* Support numpy 2.x dependency package.
 * Commit [DeepseekAPI_V2](#DeepseekAPI_V2) noee, supporting AliYun and VolcEngine API.
 * Commit [Collage](#Collage) node to collage images into one.
 * Commit [DeepSeekAPI](DeepSeekAPI) node, Use DeepSeek API for text inference.
