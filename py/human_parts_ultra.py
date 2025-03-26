@@ -15,6 +15,30 @@ model_name = os.path.basename(model_url)
 model_path = os.path.join(models_dir_path, "deeplabv3p-resnet50-human.onnx")
 
 
+class LS_HumanPartsUltraLoadModel:
+    def __init__(self):
+        self.NODE_NAME = 'Human Parts Ultra Load Model'
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        device_list = ['cuda', 'cpu']
+        return {
+            "required": {
+                "device": (device_list,),
+            }
+        }
+
+    RETURN_TYPES = ("HUMAN_PARTS_MODEL",)
+    RETURN_NAMES = ("model",)
+    FUNCTION = "load_human_parts_model"
+    CATEGORY = '😺dzNodes/LayerMask'
+
+    def load_human_parts_model(self, device):
+        import onnxruntime as ort
+        model = ort.InferenceSession(model_path, providers=['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider'])
+        return (model,)
+
+
 class LS_HumanPartsUltra:
     """
     This node is used to get a mask of the human parts in the image.
@@ -39,6 +63,7 @@ class LS_HumanPartsUltra:
         return {
             "required": {
                 "image": ("IMAGE",),
+                "model": ("HUMAN_PARTS_MODEL",),
                 "face": ("BOOLEAN", {"default": False, "label_on": "enabled(脸)", "label_off": "disabled(脸)"}),
                 "hair": ("BOOLEAN", {"default": False, "label_on": "enabled(头发)", "label_off": "disabled(头发)"}),
                 "glasses": ("BOOLEAN", {"default": False, "label_on": "enabled(眼镜)", "label_off": "disabled(眼镜)"}),
@@ -64,16 +89,13 @@ class LS_HumanPartsUltra:
             }
         }
 
-    def human_parts_ultra(self, image, face, hair, glasses, top_clothes, bottom_clothes,
+    def human_parts_ultra(self, image, model, face, hair, glasses, top_clothes, bottom_clothes,
                           torso_skin, left_arm, right_arm, left_leg, right_leg, left_foot, right_foot,
                           detail_method, detail_erode, detail_dilate, black_point, white_point,
                           process_detail, device, max_megapixels):
         """
         Return a Tensor with the mask of the human parts in the image.
         """
-        import onnxruntime as ort
-
-        model = ort.InferenceSession(model_path, providers=['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider'])
         ret_images = []
         ret_masks = []
         for img in image:
@@ -191,9 +213,11 @@ class LS_HumanPartsUltra:
 
 
 NODE_CLASS_MAPPINGS = {
-    "LayerMask: HumanPartsUltra": LS_HumanPartsUltra
+    "LayerMask: HumanPartsUltra": LS_HumanPartsUltra,
+    "LayerMask: HumanPartsUltraLoadModel": LS_HumanPartsUltraLoadModel
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerMask: HumanPartsUltra": "LayerMask: Human Parts Ultra(Advance)"
+    "LayerMask: HumanPartsUltra": "LayerMask: Human Parts Ultra(Advance)",
+    "LayerMask: HumanPartsUltraLoadModel": "LayerMask: Human Parts Ultra Load Model(Advance)"
 }

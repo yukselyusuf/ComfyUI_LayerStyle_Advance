@@ -303,10 +303,10 @@ class LS_OBJECT_DETECTOR_YOLO8:
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0),)
 
-class LS_OBJECT_DETECTOR_YOLOWORLD:
+class LS_OBJECT_DETECTOR_YOLOWORLD_LOAD_MODEL:
 
     def __init__(self):
-        self.NODE_NAME = 'Object Detector YOLO-WORLD'
+        self.NODE_NAME = 'Object Detector YOLO-WORLD Load Model'
         self.model_path = os.path.join(folder_paths.models_dir, 'yolo-world')
         os.environ['MODEL_CACHE_DIR'] = self.model_path
 
@@ -317,11 +317,42 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
                     'yolo_world/s']
         return {
             "required": {
-                "image": ("IMAGE", ),
                 "yolo_world_model": (model_list,),
+            },
+            "optional": {
+            }
+        }
+
+    RETURN_TYPES = ("YOLOWORLD_MODEL",)
+    RETURN_NAMES = ("model",)
+    FUNCTION = 'load_yolo_world_model'
+    CATEGORY = '😺dzNodes/LayerMask'
+
+    def load_yolo_world_model(self, yolo_world_model):
+        try:
+            import supervision as sv
+            from inference.models import YOLOWorld as YOLOWorldImpl
+        except ImportError as e:
+            log(f"{self.NODE_NAME}: {e}", message_type='warning')
+            return None
+        
+        model = YOLOWorldImpl(model_id=yolo_world_model)
+        return (model,)
+
+class LS_OBJECT_DETECTOR_YOLOWORLD:
+
+    def __init__(self):
+        self.NODE_NAME = 'Object Detector YOLO-WORLD'
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image": ("IMAGE", ),
+                "model": ("YOLOWORLD_MODEL",),
+                "prompt": ("STRING", {"default": "subject"}),
                 "confidence_threshold": ("FLOAT", {"default": 0.05, "min": 0, "max": 1, "step": 0.01}),
                 "nms_iou_threshold": ("FLOAT", {"default": 0.3, "min": 0, "max": 1, "step": 0.01}),
-                "prompt": ("STRING", {"default": "subject"}),
                 "sort_method": (sort_method_list,),
                 "bbox_select": (select_list,),
                 "select_index": ("STRING", {"default": "0,"},),
@@ -335,8 +366,11 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
     FUNCTION = 'object_detector_yoloworld'
     CATEGORY = '😺dzNodes/LayerMask'
 
-    def object_detector_yoloworld(self, image, yolo_world_model,
-                                  confidence_threshold, nms_iou_threshold, prompt,
+    def process_categories(self, categories: str) -> List[str]:
+        return [category.strip().lower() for category in categories.split(',')]
+
+    def object_detector_yoloworld(self, image, model, prompt,
+                                  confidence_threshold, nms_iou_threshold,
                                   sort_method, bbox_select, select_index):
         ret_previews = []
         ret_bboxes = []
@@ -346,11 +380,13 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
         except ImportError as e:
             log(f"{self.NODE_NAME}: {e}", message_type='warning')
             return None
-        model=self.load_yolo_world_model(yolo_world_model, prompt)
+
+        # Set categories for the model
+        categories = self.process_categories(prompt)
+        model.set_classes(categories)
 
         for i in image:
             infer_outputs = []
-            # img = (255 * img.unsqueeze(0).cpu().numpy()).astype(np.uint8)
             img = tensor2np(i)
             results = model.infer(
                 img, confidence=confidence_threshold)
@@ -361,46 +397,17 @@ class LS_OBJECT_DETECTOR_YOLOWORLD:
             )
             infer_outputs.append(detections)
 
-            # if len(infer_outputs[0].xyxy) > 0:
-            #     bboxes = infer_outputs[0].xyxy.tolist()
-            #     bboxes = [[int(value) for value in sublist] for sublist in bboxes]
-            #     bboxes = sort_bboxes(bboxes, sort_method)
-            #     bboxes = select_bboxes(bboxes, bbox_select, select_index)
-            # else:
-            #     bboxes = []
-
             bboxes = infer_outputs[0].xyxy.tolist()
             bboxes = [[int(value) for value in sublist] for sublist in bboxes]
             bboxes = sort_bboxes(bboxes, sort_method)
             bboxes = select_bboxes(bboxes, bbox_select, select_index)
 
-
             preview = draw_bounding_boxes(tensor2pil(i.unsqueeze(0)).convert('RGB'), bboxes, color="random", line_width=-1)
             ret_previews.append(pil2tensor(preview))
-
-            # if len(bboxes) == 0:
-            #     log(f"{self.NODE_NAME} no object found", message_type='warning')
-            # else:
-            #     log(f"{self.NODE_NAME} found {len(bboxes)} object(s)", message_type='info')
 
             ret_bboxes.append(standardize_bbox(bboxes))
 
         return (ret_bboxes, torch.cat(ret_previews, dim=0))
-
-    def process_categories(self, categories: str) -> List[str]:
-        return [category.strip().lower() for category in categories.split(',')]
-
-    def load_yolo_world_model(self,model_id: str, categories: str) -> List[torch.nn.Module]:
-        try:
-            from inference.models import YOLOWorld as YOLOWorldImpl
-        except ImportError as e:
-            log(f"{self.NODE_NAME}: {e}", message_type='warning')
-            return None
-        model = YOLOWorldImpl(model_id=model_id)
-        categories = self.process_categories(categories)
-        model.set_classes(categories)
-        return model
-
 
 class LS_DrawBBoxMask:
 
@@ -551,7 +558,8 @@ NODE_CLASS_MAPPINGS = {
     "LayerMask: ObjectDetectorFL2": LS_OBJECT_DETECTOR_FL2,
     "LayerMask: ObjectDetectorMask": LS_OBJECT_DETECTOR_MASK,
     "LayerMask: ObjectDetectorYOLO8": LS_OBJECT_DETECTOR_YOLO8,
-    "LayerMask: ObjectDetectorYOLOWorld": LS_OBJECT_DETECTOR_YOLOWORLD
+    "LayerMask: ObjectDetectorYOLOWorld": LS_OBJECT_DETECTOR_YOLOWORLD,
+    "LayerMask: ObjectDetectorYOLOWorldLoadModel": LS_OBJECT_DETECTOR_YOLOWORLD_LOAD_MODEL
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -561,5 +569,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LayerMask: ObjectDetectorFL2": "LayerMask: Object Detector Florence2(Advance)",
     "LayerMask: ObjectDetectorMask": "LayerMask: Object Detector Mask(Advance)",
     "LayerMask: ObjectDetectorYOLO8": "LayerMask: Object Detector YOLO8(Advance)",
-    "LayerMask: ObjectDetectorYOLOWorld": "LayerMask: Object Detector YOLO World(Obsolete)"
+    "LayerMask: ObjectDetectorYOLOWorld": "LayerMask: Object Detector YOLO World(Advance)",
+    "LayerMask: ObjectDetectorYOLOWorldLoadModel": "LayerMask: Object Detector YOLO World Load Model(Advance)"
 }
